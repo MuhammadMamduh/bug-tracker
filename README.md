@@ -1,5 +1,5 @@
 # Bug Tracker Pro
-
+https://www.udemy.com/course/cicd-testers/?couponCode=ACCAGE0923
 <p align="center">
   <img src="bugtracker-frontend/public/bugTracker_Logo.png" alt="Bug Tracker Logo" width="300" height="300"/>
 </p>

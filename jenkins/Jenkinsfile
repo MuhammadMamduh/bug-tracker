@@ -20,9 +20,14 @@
                         # Create cache directories
                         mkdir -p "$GOCACHE" "$GOMODCACHE"
                         
-                        # Run the tests
-                        go test -v ./...
+                        # Run the tests and generate JUnit report
+                        go test -v ./... 2>&1 | go-junit-report > test-results.xml
                     '''
+                }
+            }
+            post {
+                always {
+                    junit 'bugtracker-backend/test-results.xml'
                 }
             }
         }

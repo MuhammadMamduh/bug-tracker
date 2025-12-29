@@ -8,6 +8,7 @@ pipeline {
                     image 'snakee/golang-junit:1.21'
                     reuseNode true
                     args '-e GOCACHE=${WORKSPACE}/.cache'
+                    args '-e GOPATH=${WORKSPACE}/go'
                 }
             }
             steps {

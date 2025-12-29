@@ -1,21 +1,28 @@
-pipeline {
-    agent any
 
+ pipeline {
+    agent any
+ 
     stages {
         stage('Unit Tests - Backend') {
             agent {
                 docker {
                     image 'snakee/golang-junit:1.21'
-                    reuseNode true
-                    args "-e GOCACHE=${env.WORKSPACE}/.cache"
-                    args "-e GOPATH=${env.WORKSPACE}/go"
+                    reuseNode true // ensures container uses same workspace and Jenkins node
                 }
             }
             steps {
-                echo 'Hello World'
-                dir('bugtracker-backend'){
-                    sh "mkdir -p ${env.WORKSPACE}/.cache"
-                    sh 'go test -v ./...'
+                dir('bugtracker-backend') {
+                    sh '''
+                        # Set Go cache to a writable location
+                        export GOCACHE="$PWD/.cache/go-build"
+                        export GOMODCACHE="$PWD/.cache/go-mod"
+                        
+                        # Create cache directories
+                        mkdir -p "$GOCACHE" "$GOMODCACHE"
+                        
+                        # Run the tests
+                        go test -v ./...
+                    '''
                 }
             }
         }

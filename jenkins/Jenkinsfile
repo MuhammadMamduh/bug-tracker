@@ -67,7 +67,7 @@
                     junit 'bugtracker-frontend/test-results.xml'
                     publishHTML target: [
                         reportDir: 'bugtracker-frontend/reports',
-                        reportFiles: 'index.html',
+                        reportFiles: 'coverage/index.html',
                         reportName: 'Frontend Coverage Report'
                     ]
                 }

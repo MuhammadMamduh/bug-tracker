@@ -7,11 +7,13 @@ pipeline {
                 docker {
                     image 'snakee/golang-junit:1.21'
                     reuseNode true
+                    args '-e GOCACHE=${WORKSPACE}/.cache'
                 }
             }
             steps {
                 echo 'Hello World'
                 dir('bugtracker-backend'){
+                    sh 'mkdir -p ${WORKSPACE}/.cache'
                     sh 'go test -v ./...'
                 }
             }

@@ -12,7 +12,6 @@ pipeline {
             steps {
                 echo 'Hello World'
                 dir('bugtracker-backend'){
-                    sh 'sudo su'
                     sh 'go test -v ./...'
                 }
             }

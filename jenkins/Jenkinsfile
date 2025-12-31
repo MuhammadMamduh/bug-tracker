@@ -89,6 +89,16 @@
                 sh 'docker compose up --build -d'
             }
         }
+        stage('Run API Tests'){
+            dir('tests-api') {
+                steps {
+                    sh '''
+                        npm install
+                        npx playwright test
+                    '''
+                }
+            }
+        }
     }
     post{
         always{

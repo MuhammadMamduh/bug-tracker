@@ -87,6 +87,7 @@
             }
             steps {
                 sh 'docker compose up --build -d'
+                sh 'pwd'
             }
         }
         stage('Run API Tests'){
@@ -100,6 +101,7 @@
             steps {
                 dir('tests-api') {
                     sh '''
+                        pwd
                         npx wait-port http://localhost:8080/api/health -t 30000
                         npm ci
                         npx playwright test

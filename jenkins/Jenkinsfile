@@ -77,7 +77,6 @@
                     }
             }
         }
-
         stage('Launch the Application'){
             agent {
                 docker {

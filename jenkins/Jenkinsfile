@@ -90,8 +90,8 @@
             }
         }
         stage('Run API Tests'){
-            dir('tests-api') {
-                steps {
+            steps {
+                dir('tests-api') {
                     sh '''
                         npm install
                         npx playwright test

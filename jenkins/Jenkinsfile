@@ -49,7 +49,7 @@
                         agent {
                             docker {
                                 image 'node:20-alpine'
-                                reuseNode true // ensures container uses same workspace and Jenkins node
+                                reuseNode true // ensures container uses same workspace & Jenkins node
                             }
                         }
                         steps {

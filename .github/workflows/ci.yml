@@ -140,7 +140,8 @@ jobs:
         - name: Run Performance Test
           uses: grafana/k6-action@v1
           with:
-            path: ./tests-perf/script.js
+            path: |
+              ./tests-perf/script.js
             flags: --out json=summary.json
           
         - name: Upload API Test Playwright Report

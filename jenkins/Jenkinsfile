@@ -189,7 +189,7 @@
                 stage('Install Flyctl') {
                     steps {
                             sh 'mkdir -p $FLYCTL_INSTALL'
-                            sh 'curl -L https://fly-io/install.sh | sh'
+                            sh 'curl -L https://fly.io/install.sh | sh'
                             sh 'flyctl version'
                     }
                 }

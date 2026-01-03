@@ -1,9 +1,9 @@
 name: CI
 
 on:
-    # push:
-    #     branches:
-    #         - main
+    push:
+        branches:
+            - main
     pull_request:
         branches:
             - main
@@ -47,8 +47,7 @@ jobs:
               with:
                 name: Backend Unit Test Reports
                 path: bugtracker-backend/test-results.xml
-                reporter: jest-junit
-              
+                reporter: jest-junit       
     unit-tests-frontend:
         # needs: unit-tests-backend
         runs-on: ubuntu-latest

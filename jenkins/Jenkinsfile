@@ -210,6 +210,11 @@
             }
         }
         stage('Post deployment tests'){
+            when{
+                expression {
+                    return env.GIT_BRANCH == 'origin/main'
+                }
+            }
             agent{
                 docker{
                     image 'mcr.microsoft.com/playwright:v1.50.0-jammy'

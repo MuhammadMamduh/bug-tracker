@@ -18,7 +18,7 @@ jobs:
           #1
             - uses: actions/checkout@v5
           #2
-            - name: Set up Go
+            - name: Set up GO
               uses: actions/setup-go@v5
               with:
                 go-version: "1.21"
@@ -186,3 +186,23 @@ jobs:
             name: E2E Test Reports
             path: ./tests-e2e/test-results/results.xml
             reporter: jest-junit
+    deploy-staging:
+      needs: [api-e2e-perf-tests]
+      if: github.ref == 'refs/head/main'
+      runs-on: ubuntu-latest
+      steps:
+          - uses: actions/checkout@v5
+          - name: Setup FlyCTL
+            uses: superfly/flyctl-actions/setup-flyctl@master
+
+          - name: Deploy Backend
+            env: 
+              FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+            working-directory: ./bugtracker-backend
+            run: flyctl deploy -c fly.staging.toml --remote-only
+          - name: Deploy Frontend
+            env: 
+              FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+            working-directory: ./bugtracker-frontend
+            run: flyctl deploy -c fly.staging.toml --remote-only
+

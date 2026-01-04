@@ -206,3 +206,36 @@ jobs:
             working-directory: ./bugtracker-frontend
             run: flyctl deploy -c fly.staging.toml --remote-only
 
+    post-deployment-tests:
+      needs: deploy-staging
+      if: github.ref == 'refs/head/main'
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v5
+        - name: Install Playwright
+          working-directory: ./tests-e2e
+          run: |
+            npm ci
+            npx playwright install
+        - name: Run post-deployment tests
+          working-directory: ./tests-e2e
+          env: 
+            PLAYWRIGHT_TEST_URL: "https://bugtracker-frontend-staging.fly.dev"
+          run: |
+            npx playwright test
+
+        - name: Upload Post Deployment Test Results
+          if: always()
+          uses: actions/upload-artifact@v4
+          with: 
+            name: post-deployment-test-playwright-report
+            path: ./tests-e2e/playwright-report
+            retention-days: 30
+
+        - name: Publish Post Deployment Test Results
+          uses: dorny/test-reporter@v1
+          if: always()
+          with:
+            name: Post Deployment Test Reports
+            path: ./tests-e2e/test-results/results.xml
+            reporter: jest-junit

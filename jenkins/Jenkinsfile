@@ -250,7 +250,7 @@
             }
             }
         }
-        stage('Deploy Production'){
+        stage('Deploy Prod.'){
             when{
                 expression {
                     return env.GIT_BRANCH == 'origin/main'

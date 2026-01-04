@@ -173,6 +173,7 @@
                     }
                 }
             }
+    }
             stage('Deploy Staging'){
                 when{
                     expression {
@@ -285,7 +286,7 @@
                     }
                 }
             }
-        }
+        
     post{
         always{
             cleanWs()

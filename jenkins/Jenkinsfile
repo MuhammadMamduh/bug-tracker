@@ -208,7 +208,7 @@
                     }
                 }
             }
-        }
+            }
         stage('Post deployment tests'){
             when{
                 expression {
@@ -249,7 +249,6 @@
                 }
             }
             }
-        }
         stage('Deploy Production'){
             when{
                 expression {
@@ -285,7 +284,8 @@
                     }
                 }
             }
-        }
+            }
+    }
     post{
         always{
             cleanWs()

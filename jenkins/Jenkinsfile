@@ -10,6 +10,11 @@ pipeline {
             }
             steps {
                 dir('bugtracker-backend'){
+                    // We also explicitly point the Go cache into the workspace
+                    withEnv([
+                        "GOCACHE=${WORKSPACE}/.cache/go-build",
+                        "GOPATH=${WORKSPACE}/.go"
+                    ]){
                     sh 'go test -v ./...'
                 }
             }

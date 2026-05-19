@@ -7,6 +7,9 @@ pipeline {
                 echo 'Hello World'
                 sh 'echo "Hello Jenkins" '
                 sh 'date'
+                sh 'pwd'
+                sh 'whoami'
+                sh 'cat /etc/os-release'
             }
         }
     }

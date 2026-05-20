@@ -157,7 +157,6 @@ pipeline {
             }
             steps {
                 dir('tests-perf'){
-                    sh 'npm install'
                     sh 'k6 run script.js'
                 }
             }

@@ -106,7 +106,7 @@ pipeline {
                         If your tests start immediately, they will fail because the server isn't ready yet. This command ensures the pipeline waits exactly until the backend is fully up and running before moving on to the next step.
                     */
                     sh 'npm ci'
-                    sh 'npx wait-port http://localhost:8080/api/health -t 30000'
+                    sh 'npx wait-port http://127.0.0.1:8080/api/health -t 30000'
                     sh 'npx playwright test'
                 }
             }

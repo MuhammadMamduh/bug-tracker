@@ -26,6 +26,11 @@ pipeline {
                     }
                 }
             }
+            post {
+                always {
+                    junit 'bugtracker-backend/test-results.xml'
+                }
+            }
         }
         stage('[Unit Tests] [Frontend]') {
             agent{

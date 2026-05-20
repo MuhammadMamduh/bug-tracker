@@ -147,6 +147,31 @@ pipeline {
                     }                    
             }
         }
+        stage('Performance Tests'){
+            agent{
+                docker{
+                    image 'grafana/k6:master-with-browser'
+                    reuseNode true
+                    args '-u 0 --network=host'
+                }
+            }
+            steps {
+                dir('tests-perf'){
+                    sh 'npm install'
+                    sh 'k6 run script.js'
+                }
+            }
+            post {
+                always {
+                    // junit 'tests-perf/test-results/results.xml'
+                    publishHTML target:[
+                        reportDir: 'tests-perf/',
+                        reportFiles: 'perf-results.html',
+                        reportName: 'Performance Tests Report'
+                    ]
+                }
+            }
+        }
     }
     post {
         always {

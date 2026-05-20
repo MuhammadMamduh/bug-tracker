@@ -103,6 +103,7 @@ pipeline {
                     /*
                         wait-port: This is a handy Node.js utility. It pauses the pipeline and constantly checks (polls) the specified URL or port until it becomes available.
                         npx: This tells npm to execute the wait-port package directly from the npm registry without needing to install it globally first.
+                        If your tests start immediately, they will fail because the server isn't ready yet. This command ensures the pipeline waits exactly until the backend is fully up and running before moving on to the next step.
                     */
                     sh  '''
                             npx wait-port http://localhost:8080/api/health -t 30000
@@ -111,6 +112,17 @@ pipeline {
                         '''
 
                 }
+            }
+            post {
+                always {
+                    junit 'tests-api/test-results.xml'
+                    publishHTML target: [
+                        reportDir: 'tests-api/playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'API Tests Report'
+                    ]
+                }
+            
             }
         }
     }

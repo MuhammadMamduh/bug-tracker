@@ -107,7 +107,7 @@ pipeline {
                     */
                     sh  '''
                             npm ci
-                            npx --yes wait-port http://localhost:8080/api/health -t 60000 -y
+                            npx --yes wait-port http://localhost:8080/api/health -t 60000
                             npx playwright test
                         '''
 

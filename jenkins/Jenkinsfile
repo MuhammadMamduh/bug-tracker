@@ -6,18 +6,40 @@ pipeline {
             agent {
                 docker {
                     image 'snakee/golang-junit:1.21'
+                    reuseNode true
                 }
             }
             steps {
                 dir('bugtracker-backend'){
                     // We also explicitly point the Go cache into the workspace
                     withEnv([
+                                /*
+                                These are environment variables specific to the Go programming language (Golang) that tell the Go toolchain where to store certain types of files.
+                                GOPATH is the primary directory where Go stores downloaded third-party dependencies.
+                                GOCACHE is the directory where Go stores recently compiled build outputs.
+                                */
                                 "GOCACHE=${WORKSPACE}/.cache/go-build",
                                 "GOPATH=${WORKSPACE}/.go"
                             ])
                     {
                         sh 'go test -v ./...'
                     }
+                }
+            }
+        }
+        stage('[Unit Tests] [Frontend]') {
+            agent{
+                docker{
+                    image 'snakee/golang-junit:1.21'
+                    reuseNode true
+                }
+            }
+            steps {
+                dir('bugtracker-frontend'){
+                    sh '''
+                            npm ci
+                            npm test
+                       '''
                 }
             }
         }
